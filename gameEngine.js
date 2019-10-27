@@ -37,8 +37,9 @@ let GameEngine = function(fileName, inputCallback)
         //Record how many underscores are left before the guess.
         //Then make a guess and check to see if the number of 
         //underscores changed.
+        let guess = guessedLetter.guess.toLowerCase();
         let lastUnderscores = this.thisWord.countUnderscores();
-        this.thisWord.guessLetter(guessedLetter.guess);
+        this.thisWord.guessLetter(guess);
         let thisUnderscores = this.thisWord.countUnderscores();
 
         if(!thisUnderscores) //Check for a win.
@@ -59,12 +60,11 @@ let GameEngine = function(fileName, inputCallback)
                 console.log(this.thisWord.getWord());
                 console.log("Bad guesses:  " + this.badGuesses.toString().cyan);
                 console.log("guesses left: " + this.guessesLeft.toString().cyan + "\n");
-                this.goodGuesses.push(guessedLetter.guess)
+                this.goodGuesses.push(guess)
                 setTimeout(this.inputCallback, 0); //Do this to prevent filling up the stack.
             }
             //Check if the letter has already been guessed.
-            else if(this.badGuesses.includes(guessedLetter.guess) || 
-                    this.goodGuesses.includes(guessedLetter.guess))
+            else if(this.badGuesses.includes(guess) || this.goodGuesses.includes(guess))
             {
                 console.log("\n********** Already Guessed! **********".yellow);
                 console.log(this.thisWord.getWord());
@@ -76,7 +76,7 @@ let GameEngine = function(fileName, inputCallback)
             {
                 //Wrong guess and letter not already guessed.
                 this.guessesLeft--;
-                this.badGuesses.push(guessedLetter.guess)
+                this.badGuesses.push(guess)
 
                 if(!this.guessesLeft) //Check for a loss.
                 {
