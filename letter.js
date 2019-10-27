@@ -1,5 +1,5 @@
 //The constructor for letter objects.
-var Letter = function(letter)
+let Letter = function(letter)
 {
     if(letter.match(/[a-z]/i) && letter.length == 1)
     {
@@ -11,18 +11,15 @@ var Letter = function(letter)
         this.letter = letter;
         this.isGuessed = true;
     }
-    else
-    {
-        this.letter = "*";
-        this.isGuessed = true;
-        console.log("Invalid letter");
-    }
+    else throw "Invalid Letter";
 
+    //Return the letter if it has been guessed, _ if not.
     this.getLetter = function()
     {
         return this.isGuessed ? this.letter : "_";
     }
 
+    //Make a guess at the letter.
     this.guessLetter = function(letter)
     {
         if(letter.toLowerCase() === this.letter)

@@ -1,9 +1,10 @@
-var Letter = require("./letter.js");
+let Letter = require("./letter.js");
 
 //The constructor for letter objects.
-var Word = function(word)
+let Word = function(word)
 {
     this.wordLetters = [];
+    this.revealedWord = "";
 
     //Make sure only letters and spaces exist in the word.
     let checkArray = word.split("");
@@ -11,8 +12,7 @@ var Word = function(word)
     {
         if(!checkArray[i].match(/[a-z ]/i))
         {
-            console.log("Invalid word");
-            return;
+            throw "Invalid Word";
         }
     }
 
@@ -20,6 +20,12 @@ var Word = function(word)
     for(let i = 0; i < checkArray.length; i++)
     {
         this.wordLetters.push(new Letter(checkArray[i].toLowerCase()));
+    }
+
+    //Create a string of the fully revealed word.
+    for(let i = 0; i < checkArray.length; i++)
+    {
+        this.revealedWord += checkArray[i] + " ";
     }
 
     //Return the current state of the word.
@@ -42,6 +48,27 @@ var Word = function(word)
         {
             this.wordLetters[i].guessLetter(letter.toLowerCase());
         }
+    }
+
+    //Returns the number of underscores in the word.
+    this.countUnderscores = function()
+    {
+        let numUnderscores = 0;
+        for(let i = 0; i < this.wordLetters.length; i++)
+        {
+            if(this.wordLetters[i].getLetter() === "_")
+            {
+                numUnderscores++;
+            }
+        }
+
+        return numUnderscores;
+    }
+
+    //Returns the complete word.
+    this.revealWord = function()
+    {
+        return this.revealedWord;
     }
 }
 
