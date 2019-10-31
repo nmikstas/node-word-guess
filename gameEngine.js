@@ -11,8 +11,8 @@ let GameEngine = function(fileName, inputCallback)
     this.guessesLeft   = this.NUM_GUESSES;
     this.badGuesses    = [];
     this.goodGuesses   = [];
-    this.wins          =  0;
-    this.losses        =  0;
+    this.wins          = 0;
+    this.losses        = 0;
     this.wordGen;
     this.thisWord;
 
@@ -29,7 +29,7 @@ let GameEngine = function(fileName, inputCallback)
         console.log(self.thisWord.getWord() + "\n");
 
         //Get the user's letter guess.
-        setTimeout(self.inputCallback, 0); //Do this to prevent filling up the stack.    
+        self.inputCallback();    
     }
 
     this.processInput = function(guessedLetter)
@@ -49,9 +49,9 @@ let GameEngine = function(fileName, inputCallback)
             console.log(this.thisWord.getWord());
             console.log("Wins:   " + this.wins.toString().magenta);
             console.log("Losses: " + this.losses.toString().magenta);
-            setTimeout(this.runGame, 0); //Do this to prevent filling up the stack.
+            this.runGame();
         }
-        else //Check the other conditions.
+        else //Didn't win. Check the other conditions.
         {
             //Check if the player correctly guessed a letter.
             if(lastUnderscores !== thisUnderscores)
@@ -61,7 +61,7 @@ let GameEngine = function(fileName, inputCallback)
                 console.log("Bad guesses:  " + this.badGuesses.toString().cyan);
                 console.log("guesses left: " + this.guessesLeft.toString().cyan + "\n");
                 this.goodGuesses.push(guess)
-                setTimeout(this.inputCallback, 0); //Do this to prevent filling up the stack.
+                this.inputCallback();
             }
             //Check if the letter has already been guessed.
             else if(this.badGuesses.includes(guess) || this.goodGuesses.includes(guess))
@@ -70,7 +70,7 @@ let GameEngine = function(fileName, inputCallback)
                 console.log(this.thisWord.getWord());
                 console.log("Bad guesses:  " + this.badGuesses.toString().cyan);
                 console.log("guesses left: " + this.guessesLeft.toString().cyan + "\n");
-                setTimeout(this.inputCallback, 0); //Do this to prevent filling up the stack.
+                this.inputCallback();
             }
             else
             {
@@ -85,7 +85,7 @@ let GameEngine = function(fileName, inputCallback)
                     console.log(this.thisWord.revealWord());
                     console.log("Wins:   " + this.wins.toString().magenta);
                     console.log("Losses: " + this.losses.toString().magenta);
-                    setTimeout(this.runGame, 0); //Do this to prevent filling up the stack.
+                    this.runGame();
                 }
                 else //Keep playing.
                 {
@@ -93,7 +93,7 @@ let GameEngine = function(fileName, inputCallback)
                     console.log(this.thisWord.getWord());
                     console.log("Bad guesses:  " + this.badGuesses.toString().cyan);
                     console.log("guesses left: " + this.guessesLeft.toString().cyan + "\n");
-                    setTimeout(this.inputCallback, 0); //Do this to prevent filling up the stack.
+                    this.inputCallback();
                 }
             }
         }

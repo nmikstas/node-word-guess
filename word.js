@@ -16,7 +16,7 @@ let Word = function(word)
         }
     }
 
-    //Everything checks out.  Fill the wordLetters array.
+    //Everything checks out. Fill the wordLetters array.
     for(let i = 0; i < checkArray.length; i++)
     {
         this.wordLetters.push(new Letter(checkArray[i].toLowerCase()));
